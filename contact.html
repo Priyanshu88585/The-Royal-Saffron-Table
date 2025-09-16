@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Royal Saffron Table</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <video autoplay muted loop class="video-background">
+    <source src="assets/video/vid1.mp4" type="video/mp4">
+  </video>
+
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="#" class="logoImage"><img src="./assets/logo/Contemporary Logo with Saffron Flower Icon.png" alt="logo" width="60" height="60"></a>
+      <div class="logo">The Royal Saffron table</div>
+    </div>
+
+  <nav class="nav-center">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="menu.html" class="nav-link">Menu</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link active">Contact</a>
+  </nav>
+
+  <div class="nav-right">
+    <a href="menu.html">
+      <button style="background-color: #ff7f50; color: white; padding: 14px 28px; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; transition: background 0.3s ease;">
+        Explore Our Menu
+      </button>
+    </a>
+  </div>
+</header>
+
+<!-- CONTACT CONTENT -->
+<section class="container" style="padding-top: 50px;">
+  <h1 style="text-align: center; font-size: 3rem; color: #ff7f50; margin-bottom: 20px;">Get in Touch</h1>
+  <p style="text-align: center; max-width: 700px; margin: auto; color: #ffffff; font-size: 1.1rem;">
+    Have a question, suggestion, or just want to say hi? We'd love to hear from you!
+  </p>
+
+  <div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center;">
+    <!-- Contact Info -->
+    <div style="flex: 1; min-width: 280px;">
+      <h2 style="color: #ff7f50;">📍 Address</h2>
+      <p style="color: rgb(225, 225, 225);">Minal Residency Bhopal<br>Minal Shopping Street bhopal ayodha bypass, 456789</p>
+
+      <h2 style="margin-top: 20px; color: #ff7f50;">📞 Phone</h2>
+      <p style="color: rgb(225, 225, 225);">+91 8858576463<br>+91 8959715696</p>
+
+      <h2 style="margin-top: 20px; color: #ff7f50;">✉️ Email</h2>
+      <p style="color: rgb(225, 225, 225);">priyanshukesharwani885857@gmail.com</p>
+
+      <h2 style="margin-top: 20px; color: #ff7f50;">🕒 Hours</h2>
+      <p style="color: rgb(225, 225, 225);">Sun – Sat: 10:00 AM – 10:00 PM</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modals & Popups -->
+<div class="order-popup" id="orderPopup"></div>
+<div class="cart-popup" id="cartPopup"></div>
+
+<div class="modal" id="authModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal-content">
+    <h2 id="authTitle">Login</h2>
+    <form id="authForm">
+      <label for="authEmail">Email</label>
+      <input type="email" id="authEmail" required />
+      <label for="authPassword">Password</label>
+      <input type="password" id="authPassword" required />
+      <div id="registerFields" style="display:none;">
+        <label for="authConfirmPassword">Confirm Password</label>
+        <input type="password" id="authConfirmPassword" />
+        <label for="authProfileName">Name</label>
+        <input type="text" id="authProfileName" />
+        <label for="authProfilePic">Profile Picture URL (optional)</label>
+        <input type="url" id="authProfilePic" placeholder="https://example.com/photo.jpg" />
+      </div>
+      <button type="submit" class="btn-submit">Submit</button>
+      <button type="button" id="authCloseBtn" class="btn-close">Close</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="reviewModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
+  <div class="modal-content">
+    <h2 id="reviewTitle">Leave a Review</h2>
+    <form id="reviewForm">
+      <input type="hidden" id="reviewItemId" />
+      <label for="reviewName">Your Name</label>
+      <input type="text" id="reviewName" readonly />
+      <label for="reviewRating">Rating (1-5)</label>
+      <input type="number" id="reviewRating" min="1" max="5" step="0.1" required />
+      <label for="reviewComment">Comment</label>
+      <textarea id="reviewComment" rows="4" required></textarea>
+      <button type="submit" class="btn-submit">Submit Review</button>
+      <button type="button" id="closeReviewModal" class="btn-close">Close</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast" role="alert" aria-live="assertive"></div>
+<audio id="orderSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
+<script src="script.js"></script>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const msg = document.getElementById('contactMessage').value.trim();
+
+    if (name && email && msg) {
+      showToast("📧 Message sent! We'll get back to you soon.");
+      this.reset();
+    } else {
+      alert('Please fill in all fields.');
+    }
+  });
+</script>
+</body>
+</html>

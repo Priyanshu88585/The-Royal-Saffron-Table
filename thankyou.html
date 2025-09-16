@@ -1,0 +1,55 @@
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thank You - The Royal Saffron Table</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="#" class="logoImage"><img src="./assets/logo/Contemporary Logo with Saffron Flower Icon.png" alt="logo" width="60" height="60"></a>
+      <div class="logo">The Royal Saffron Table</div>
+    </div>
+
+    <nav class="nav-center">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="menu.html" class="nav-link">Menu</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <a href="menu.html">
+        <button
+          style="background-color: #ff7f50; color: white; padding: 14px 28px; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; transition: background 0.3s ease;">
+          Explore Our Menu
+        </button>
+      </a>
+    </div>
+  </header>
+
+  <video autoplay muted loop class="video-background">
+    <source src="assets/video/vid1.mp4" type="video/mp4">
+  </video>
+
+  <div class="container" style="text-align: center; padding: 100px 20px;">
+    <a href="#" class="logoImage"><img src="./assets/logo/Contemporary Logo with Saffron Flower Icon.png" alt="logo" width="300" height="300"></a>
+    <h1 style="font-size: 3rem;  color: #ff7f50;">🎉 Thank You for Your Order!</h1>
+    <p style="font-size: 1.2rem; text-align: center: margin: 20px 0; color: #ffffff;">Your order ID is : <strong
+        id="orderIdDisplay">#123456</strong></p>
+    <a href="menu.html">
+      <button style="margin-top: 20px; background-color: #ff7f50; color: white; padding: 14px 28px; font-size: 1.1rem; border: none; border-radius: 8px;">Return Home</button>
+    </a>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get('orderId');
+    if (orderId) {
+      document.getElementById('orderIdDisplay').textContent = orderId;
+    }
+  </script>
+</body>
+</html>

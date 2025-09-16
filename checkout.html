@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout - The Royal Saffron Table</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="index.html" class="logoImage"><img src="./assets/img/logo1.png" alt="logo" width="60" height="60"></a>
+      <div class="logo">The Royal Saffron Table</div>
+    </div>
+  </header>
+
+  <div class="container" style="padding: 120px 20px 60px; text-align: center;">
+    <h1 style="color: #ff7f50;">Complete Your Payment</h1>
+    <p id="orderTotal" style="margin:12px 0;font-size:1.1rem;"></p>
+
+    <div id="card-element" style="margin: 20px auto; max-width: 480px;"></div>
+
+    <div style="margin-top:18px;">
+      <button id="payButton" class="primary" style="padding:12px 24px;border-radius:8px;">Pay with Card</button>
+    </div>
+
+    <h3 style="margin:18px 0;color:#ddd;">OR</h3>
+
+    <button id="codButton" class="secondary" style="padding:12px 24px;border-radius:8px;">Cash on Delivery</button>
+  </div>
+
+  <div id="toast" role="alert" aria-live="assertive"></div>
+
+  <script>
+    // Replace with your own publishable key: e.g. 'pk_test_XXXXXXXX'
+    const STRIPE_PUBLISHABLE_KEY = '{{YOUR_PUBLISHABLE_KEY}}';
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+    const elements = stripe.elements();
+    const cardElement = elements.create('card', {
+      style: {
+        base: {
+          color: '#ffffff',
+          '::placeholder': { color: '#bdbdbd' },
+          fontSize: '16px',
+          fontFamily: 'Segoe UI, Arial, sans-serif'
+        },
+        invalid: { color: '#ff4d4d' }
+      }
+    });
+    cardElement.mount('#card-element');
+
+    const amount = Number(localStorage.getItem('checkoutAmount') || 0);
+    document.getElementById('orderTotal').innerText = `Order Total: ₹ ${amount.toFixed(2)}`;
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3500);
+    }
+
+    async function createPaymentIntent(amount) {
+      try {
+        const res = await fetch('/create-payment-intent', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ amount })
+        });
+        return await res.json();
+      } catch (err) {
+        console.error(err);
+        return { error: err.message || 'Network error' };
+      }
+    }
+
+    document.getElementById('payButton').addEventListener('click', async () => {
+      if (!amount || amount <= 0) return showToast('Cart is empty.');
+      showToast('Creating payment...');
+
+      const data = await createPaymentIntent(amount);
+      if (data.error) { showToast('Payment error: ' + data.error); return; }
+      const clientSecret = data.clientSecret;
+      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: { card: cardElement }
+      });
+
+      if (error) {
+        showToast('Payment failed: ' + error.message);
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        // Save order (simple localStorage order record)
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        orders.push({ id: paymentIntent.id, method: 'Card', amount, date: new Date().toLocaleString() });
+        localStorage.setItem('orders', JSON.stringify(orders));
+        showToast('Payment successful!');
+        // redirect to thank you with id
+        window.location.href = `thankyou.html?orderId=${encodeURIComponent(paymentIntent.id)}`;
+      } else {
+        showToast('Payment status: ' + (paymentIntent?.status || 'unknown'));
+      }
+    });
+
+    document.getElementById('codButton').addEventListener('click', () => {
+      if (!amount || amount <= 0) return showToast('Cart is empty.');
+      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      const id = 'COD-' + Date.now();
+      orders.push({ id, method: 'COD', amount, date: new Date().toLocaleString() });
+      localStorage.setItem('orders', JSON.stringify(orders));
+      showToast('Order placed with Cash on Delivery.');
+      window.location.href = `thankyou.html?orderId=${encodeURIComponent(id)}`;
+    });
+  </script>
+</body>
+</html>

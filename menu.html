@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Royal Saffron Table</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <video autoplay muted loop class="video-background">
+    <source src="assets/video/vid1.mp4" type="video/mp4">
+  </video>
+
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="#" class="logoImage"><img src="./assets/logo/Contemporary Logo with Saffron Flower Icon.png" alt="logo" width="60" height="60"></a>
+      <div class="logo">The Royal Saffron Table</div>
+    </div>
+
+    <nav class="nav-center">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="menu.html" class="nav-link active">Menu</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <!-- Cart Icon -->
+      <div id="cartIconTop" class="cart-icon" title="Cart (0)" tabindex="0" aria-label="Shopping Cart">
+        <i class="ri-shopping-cart-line"></i>
+        <span id="cartCountTop">0</span>
+      </div>
+
+      <!-- Auth area -->
+      <div id="authAreaTop"></div>
+
+    </div>
+  </header>
+  <!-- Auto-Scrolling Offers Banner -->
+  <div class="offer-banner" aria-label="Special Offers">
+    <div class="offer-track">
+      <span class="offer-item">🔥 Get 20% off on all Burgers this week!</span>
+      <span class="offer-item">🎉 Buy 1 Pizza, Get 1 Free on Fridays!</span>
+      <span class="offer-item">💥 Free drink with orders above ₹ 50!</span>
+      <span class="offer-item">📦 We deliver in under 30 minutes — guaranteed!</span>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="container" id="container">
+
+    <!-- Filter & Sort -->
+    <div class="filters-sort">
+      <div class="filters">
+        <!-- Filter buttons stay the same -->
+        <button class="filter-btn active" data-cat="All">All</button>
+        <button class="filter-btn" data-cat="Pizza">Pizza</button>
+        <button class="filter-btn" data-cat="Burger">Burger</button>
+        <button class="filter-btn" data-cat="Fish">Fish</button>
+      </div>
+
+      <!-- Search bar goes here -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search food..." />
+      </div>
+
+      <div class="sorter">
+        <label for="sortByRating" style="color: rgb(255, 255, 255);">Sort by:</label>
+        <select id="sortByRating">
+          <option value="default">Default</option>
+          <option value="high">Highest Rated</option>
+          <option value="low">Lowest Rated</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div id="itemCards" class="items-grid">
+      <!-- Example cards -->
+      <div class="itemCard" data-name="Burger Combo" data-price="39" data-category="Burger">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/035/197/704/small/ai-generated-tasty-hamburger-with-fries-isolated-on-transparent-background-png.png"
+          alt="Burger Combo" />
+        <h1 class="itemTittle">Burger Combo</h1>
+        <p>Cheesy burger with fries</p>
+        <span class="price">₹ 39</span>
+        <div class="rating averageRating" data-for="Burger Combo"><span>N/A</span></div>
+        <div class="card-actions">
+          <i class="ri-heart-fill"></i>
+          <button class="addToCartBtn">Add to Cart</button>
+          <button class="leaveReviewBtn">Leave Review</button>
+        </div>
+      </div>
+
+      <div class="itemCard" data-name="Cheesy Pizza" data-price="56" data-category="Pizza">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/023/575/175/small/pizza-with-mozzarella-cheese-tomato-kiwi-and-olives-ai-generated-free-png.png"
+          alt="Cheesy Pizza" />
+        <h1 class="itemTittle">Cheesy Pizza</h1>
+        <p>Loaded with mozzarella</p>
+        <span class="price">₹ 56</span>
+        <div class="rating averageRating" data-for="Cheesy Pizza"><span>N/A</span></div>
+        <div class="card-actions">
+          <i class="ri-heart-fill"></i>
+          <button class="addToCartBtn">Add to Cart</button>
+          <button class="leaveReviewBtn">Leave Review</button>
+        </div>
+      </div>
+
+      <div class="itemCard" data-name="Grilled Fish" data-price="48" data-category="Fish">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/045/839/654/small/grilled-fish-in-a-plate-on-transparent-background-png.png"
+          alt="Grilled Fish" />
+        <h1 class="itemTittle">Grilled Fish</h1>
+        <p>Healthy and spicy</p>
+        <span class="price">₹ 48</span>
+        <div class="rating averageRating" data-for="Grilled Fish"><span>N/A</span></div>
+        <div class="card-actions">
+          <i class="ri-heart-fill"></i>
+          <button class="addToCartBtn">Add to Cart</button>
+          <button class="leaveReviewBtn">Leave Review</button>
+        </div>
+      </div>
+
+      <div class="itemCard" data-name="Veggie Delight" data-price="45" data-category="Pizza">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/045/839/654/small/grilled-fish-in-a-plate-on-transparent-background-png.png"
+          alt="Veggie Delight" />
+        <h1 class="itemTittle">Veggie Delight</h1>
+        <p>Fresh veggies on a thin crust</p>
+        <span class="price">₹ 45</span>
+        <div class="rating averageRating" data-for="Veggie Delight"><span>N/A</span></div>
+        <div class="card-actions">
+          <i class="ri-heart-fill"></i>
+          <button class="addToCartBtn">Add to Cart</button>
+          <button class="leaveReviewBtn">Leave Review</button>
+        </div>
+      </div>
+
+      <div class="itemCard" data-name="Spicy Chicken Burger" data-price="42" data-category="Burger">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/045/839/654/small/grilled-fish-in-a-plate-on-transparent-background-png.png"
+          alt="Spicy Chicken Burger" />
+        <h1 class="itemTittle">Spicy Chicken Burger</h1>
+        <p>Juicy chicken with spicy sauce</p>
+        <span class="price">₹ 42</span>
+        <div class="rating averageRating" data-for="Spicy Chicken Burger"><span>N/A</span></div>
+        <div class="card-actions">
+          <i class="ri-heart-fill"></i>
+          <button class="addToCartBtn">Add to Cart</button>
+          <button class="leaveReviewBtn">Leave Review</button>
+        </div>
+      </div>
+
+      <div class="itemCard" data-name="Classic Margherita" data-price="50" data-category="Pizza">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/045/839/654/small/grilled-fish-in-a-plate-on-transparent-background-png.png"
+          alt="Classic Margherita" />
+        <h1 class="itemTittle">Classic Margherita</h1>
+        <p>Simple and delicious</p>
+        <span class="price">₹ 50</span>
+        <div class="rating averageRating" data-for="Classic Margherita"><span>N/A</span></div>
+        <div class="card-actions">
+          <i class="ri-heart-fill"></i>
+          <button class="addToCartBtn">Add to Cart</button>
+          <button class="leaveReviewBtn">Leave Review</button>
+        </div>
+      </div>
+
+      <div class="itemCard" data-name="Classic Margherita" data-price="50" data-category="Pizza">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/045/839/654/small/grilled-fish-in-a-plate-on-transparent-background-png.png"
+          alt="Classic Margherita" />
+        <h1 class="itemTittle">Classic Margherita</h1>
+        <p>Simple and delicious</p>
+        <span class="price">₹ 50</span>
+        <div class="rating averageRating" data-for="Classic Margherita"><span>N/A</span></div>
+        <div class="card-actions">
+          <i class="ri-heart-fill"></i>
+          <button class="addToCartBtn">Add to Cart</button>
+          <button class="leaveReviewBtn">Leave Review</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Popup -->
+  <div class="order-popup" id="orderPopup"></div>
+
+  <!-- Cart Popup -->
+  <div class="cart-popup" id="cartPopup"></div>
+
+  <!-- Auth Modal -->
+  <div class="modal" id="authModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-content">
+      <h2 id="authTitle">Login</h2>
+      <form id="authForm">
+        <label for="authEmail">Email</label>
+        <input type="email" id="authEmail" required />
+        <label for="authPassword">Password</label>
+        <input type="password" id="authPassword" required />
+
+        <div id="registerFields" style="display:none;">
+          <label for="authConfirmPassword">Confirm Password</label>
+          <input type="password" id="authConfirmPassword" />
+          <label for="authProfileName">Name</label>
+          <input type="text" id="authProfileName" />
+          <label for="authProfilePic">Profile Picture URL (optional)</label>
+          <input type="url" id="authProfilePic" placeholder="https://example.com/photo.jpg" />
+        </div>
+
+        <button type="submit" class="btn-submit">Submit</button>
+        <button type="button" id="authCloseBtn" class="btn-close">Close</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal" id="reviewModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
+    <div class="modal-content">
+      <h2 id="reviewTitle">Leave a Review</h2>
+      <form id="reviewForm">
+        <input type="hidden" id="reviewItemId" />
+        <label for="reviewName">Your Name</label>
+        <input type="text" id="reviewName" readonly />
+        <label for="reviewRating">Rating (1-5)</label>
+        <input type="number" id="reviewRating" min="1" max="5" step="0.1" required />
+        <label for="reviewComment">Comment</label>
+        <textarea id="reviewComment" rows="4" required></textarea>
+        <button type="submit" class="btn-submit">Submit Review</button>
+        <button type="button" id="closeReviewModal" class="btn-close">Close</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal" id="checkoutModal" aria-hidden="true">
+    <div class="modal-content">
+      <h2>Checkout</h2>
+      <form id="checkoutForm">
+        <label for="checkoutName">Name</label>
+        <input type="text" id="checkoutName" required />
+
+        <label for="checkoutEmail">Email</label>
+        <input type="email" id="checkoutEmail" required />
+
+        <label for="checkoutAddress">Address</label>
+        <textarea id="checkoutAddress" rows="3" required></textarea>
+
+        <div id="checkoutSummary" style="margin-top: 20px; font-size: 0.95rem;"></div>
+
+        <button type="submit" class="btn-submit">Place Order</button>
+        <button type="button" id="closeCheckoutModal" class="btn-close">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Toast Notification -->
+  <div id="toast" role="alert" aria-live="assertive"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

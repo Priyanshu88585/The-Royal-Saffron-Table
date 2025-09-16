@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - The Royal Saffron Table</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      padding: 20px;
+      background: #f4f6f8;
+      font-family: Arial, sans-serif;
+      color: #222;
+    }
+
+    h1 {
+      color: #ff7f50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .dashboard,
+    .admin-section {
+      max-width: 1200px;
+      margin: 18px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 16px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .stat-box h2 {
+      margin-bottom: 8px;
+      color: #666
+    }
+
+    .order-card {
+      border: 1px solid #eee;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #fafafa
+    }
+
+    .actions button {
+      padding: 8px 12px;
+      margin-right: 8px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background: #ffa500;
+      color: #fff
+    }
+
+    .delete-btn {
+      background: #ff4d4d;
+      color: #fff
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard">
+    <h1>📊 Admin Dashboard</h1>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <h2>Total Orders</h2>
+        <p id="ordersCount">0</p>
+      </div>
+      <div class="stat-box">
+        <h2>Total Revenue</h2>
+        <p id="totalRevenue">₹0</p>
+      </div>
+      <div class="stat-box">
+        <h2>Distinct Customers</h2>
+        <p id="distinctCustomers">0</p>
+      </div>
+      <div class="stat-box">
+        <h2>Top Item</h2>
+        <p id="topItem">N/A</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <h2>Orders</h2>
+    <div id="adminOrders"></div>
+  </div>
+
+  <script>
+    // orders stored in localStorage under 'orders' as array
+    function loadOrders() {
+      return JSON.parse(localStorage.getItem('orders') || '[]');
+    }
+
+    function renderStats() {
+      const orders = loadOrders();
+      document.getElementById('ordersCount').innerText = orders.length;
+      const revenue = orders.reduce((s, o) => s + (Number(o.amount) || 0), 0);
+      document.getElementById('totalRevenue').innerText = `₹${revenue.toFixed(2)}`;
+      // distinct customers: if saved customer data exists (not here), else count by unique methods
+      const customers = new Set(orders.map(o => o.customer?.email || o.id));
+      document.getElementById('distinctCustomers').innerText = customers.size;
+
+      // top item: if each order had items array
+      const itemCount = {};
+      orders.forEach(o => {
+        if (Array.isArray(o.items)) {
+          o.items.forEach(it => { itemCount[it.name] = (itemCount[it.name] || 0) + (it.qty || 1); });
+        }
+      });
+      const top = Object.entries(itemCount).sort((a, b) => b[1] - a[1])[0];
+      document.getElementById('topItem').innerText = top ? `${top[0]} (${top[1]})` : 'N/A';
+    }
+
+    function renderOrders() {
+      const container = document.getElementById('adminOrders');
+      const orders = loadOrders();
+      container.innerHTML = '';
+      if (orders.length === 0) {
+        container.innerHTML = '<p>No orders yet.</p>'; return;
+      }
+      orders.forEach((o, idx) => {
+        const div = document.createElement('div');
+        div.className = 'order-card';
+        const itemsHtml = (o.items || []).map(it => `<li>${it.name} × ${it.qty} = ₹${(it.price * it.qty).toFixed(2)}</li>`).join('');
+        div.innerHTML = `
+          <h3>Order ${idx + 1} — <small>${o.date || ''}</small></h3>
+          <p><strong>ID:</strong> ${o.id}</p>
+          <p><strong>Method:</strong> ${o.method || 'N/A'} — <strong>Amount:</strong> ₹${Number(o.amount || 0).toFixed(2)}</p>
+          ${(itemsHtml ? ('<ul>' + itemsHtml + '</ul>') : '')}
+          <div class="actions">
+            <button class="edit-btn" onclick="editOrder(${idx})">Edit</button>
+            <button class="delete-btn" onclick="deleteOrder(${idx})">Delete</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function editOrder(i) {
+      alert('Demo: Edit order #' + (i + 1) + '. Implement form if needed.');
+    }
+    function deleteOrder(i) {
+      if (!confirm('Delete this order?')) return;
+      const orders = loadOrders();
+      orders.splice(i, 1);
+      localStorage.setItem('orders', JSON.stringify(orders));
+      renderStats(); renderOrders();
+    }
+
+    // init
+    renderStats();
+    renderOrders();
+  </script>
+</body>
+
+</html>
