@@ -523,7 +523,7 @@ button {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 15px;   /* space between elements */
+  gap: 15px;   /* space bt elements */
 }
 
 /* Cart Icon */
@@ -619,3 +619,4 @@ button {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
+
